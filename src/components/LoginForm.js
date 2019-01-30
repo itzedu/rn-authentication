@@ -5,7 +5,10 @@ import { Button, Card, CardSection, Input } from './common';
 export default class LoginForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { text: '' };
+    this.state = { 
+      email: '',
+      password: '',
+    };
   }
 
   render() {
@@ -14,11 +17,20 @@ export default class LoginForm extends Component {
         <CardSection>
           <Input
             label='Email:'
-            value={this.state.text}
-            onChangeText={text => this.setState({ text })}
+            value={this.state.email}
+            onChangeText={email => this.setState({ email })}
+            placeholder='example@email.com'
           />
         </CardSection>
-        <CardSection />
+        <CardSection>
+          <Input
+            label='Password:'
+            value={this.state.password}
+            onChangeText={password => this.setState({ password })}
+            placeholder='********'
+            secureTextEntry
+          />
+        </CardSection>
         <CardSection>
           <Button>
             <Text>Log In</Text>
