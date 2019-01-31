@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import firebase from 'firebase';
-import { Header } from './components/common';
+import { Header, Button, Spinner } from './components/common';
 import LoginForm from './components/LoginForm';
 
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { loggedIn: false };
+    this.state = { loggedIn: null };
   }
 
   componentWillMount() {
@@ -29,11 +29,27 @@ export default class App extends Component {
     });
   }
   
+  renderContent() {
+    switch (this.state.loggedIn) {
+      case true:
+        return (
+          <View style={{ height: 40 }}>
+            <Button onPress={() => firebase.auth().signOut()}>
+              <Text>Logout</Text>
+            </Button>
+          </View>
+        );
+      case false:
+        return <LoginForm />;
+      default:
+        return <Spinner size='large' />;
+    }
+  }
   render() {
     return (
       <View style={styles.viewStyle}>
         <Header headerText="Authentication" />
-        <LoginForm />
+        {this.renderContent()}
       </View>
     );
   }
